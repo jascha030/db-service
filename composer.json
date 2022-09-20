@@ -38,7 +38,8 @@
         "friendsofphp/php-cs-fixer": "^v3.8.0",
         "phpunit/phpunit": "^9.5",
         "roave/security-advisories": "dev-latest",
-        "symfony/var-dumper": "4.4|^5.4|^6.0"
+        "symfony/var-dumper": "4.4|^5.4|^6.0",
+        "vlucas/phpdotenv": "^5.4"
     },
     "suggest": {
         "php-di/php-di": "^6.0"

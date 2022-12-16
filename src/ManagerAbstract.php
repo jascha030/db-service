@@ -44,8 +44,5 @@ abstract class ManagerAbstract implements ConnectorInterface, FactoryInterface, 
         $this->getConnection()->close();
     }
 
-    /**
-     * @return \Doctrine\DBAL\Connection
-     */
     abstract public function getConnection(): Connection;
 }

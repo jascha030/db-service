@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpMissingParentCallCommonInspection */
 
 declare(strict_types=1);
 
@@ -6,7 +6,6 @@ namespace Jascha030\DB;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
-use Jascha030\DB\ManagerAbstract;
 use PHPUnit\Framework\TestCase;
 use function PHPUnit\Framework\assertArrayNotHasKey;
 use function PHPUnit\Framework\assertInstanceOf;
@@ -34,6 +33,7 @@ final class ManagerAbstractTest extends TestCase
             'host'     => 'localhost',
             'driver'   => 'pdo_mysql',
         ]);
+
         self::$databaseName = uniqid('unittest', false);
     }
 

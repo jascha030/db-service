@@ -58,7 +58,7 @@
     "scripts": {
         "php-cs-fixer": "tools/php-cs-fixer",
         "phpstan": "tools/phpstan",
-        "phpunit": "tools/phpunit",
+        "phpunit": "vendor/bin/phpunit",
         "rector": "vendor/bin/rector",
         "format": "@php-cs-fixer fix --config=.php-cs-fixer.php",
         "test": "@phpunit -c phpunit.xml",

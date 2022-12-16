@@ -25,7 +25,7 @@ abstract class ManagerAbstract implements ConnectorInterface, FactoryInterface, 
     {
         $this->getConnection()
             ->createSchemaManager()
-            ->createDatabase($name);
+            ->dropDatabase($name);
 
         $this->getConnection()->close();
     }

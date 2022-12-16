@@ -16,7 +16,16 @@
         "DB-management"
     ],
     "homepage": "https://github.com/jascha030",
-    "config": {},
+    "config": {
+        "platform-check": false,
+        "platform": {
+            "php": "8.0.2"
+        },
+        "sort-packages": true,
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true
+        }
+    },
     "bin": [],
     "autoload": {
         "psr-4": {
@@ -25,13 +34,13 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Jascha030\\DB\\Tests\\": "tests"
+            "Jascha030\\DB\\": "tests"
         }
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^8.0.0|^8.1",
+        "php": "~8.0||~8.1||~8.2",
         "doctrine/dbal": "^3.4"
     },
     "require-dev": {
@@ -39,20 +48,22 @@
         "phpunit/phpunit": "^9.5",
         "roave/security-advisories": "dev-latest",
         "symfony/var-dumper": "4.4|^5.4|^6.0",
-        "vlucas/phpdotenv": "^5.4"
+        "vlucas/phpdotenv": "^5.4",
+        "bamarni/composer-bin-plugin": "^1.8"
     },
     "suggest": {
         "php-di/php-di": "^6.0"
     },
     "extra": {},
     "scripts": {
-        "phpunit": "phpunit -c .phpunit.xml",
-        "php-cs-fixer": "php-cs-fixer fix --config .php-cs-fixer.php",
-        "test": "@phpunit",
-        "format": "@php-cs-fixer"
-    },
-    "scripts-descriptions": {
-        "test": "Runs phpunit with .phpunit.xml",
-        "format": "Runs php-cs-fixer with .php-cs-fixer.php."
+        "php-cs-fixer": "tools/php-cs-fixer",
+        "phpstan": "tools/phpstan",
+        "phpunit": "tools/phpunit",
+        "rector": "vendor/bin/rector",
+        "format": "@php-cs-fixer fix --config=.php-cs-fixer.php",
+        "test": "@phpunit -c phpunit.xml",
+        "analyze": "@phpstan analyze -c phpstan.neon",
+        "fix:dry": "@rector process src --dry-run",
+        "fix": "@rector process src"
     }
 }

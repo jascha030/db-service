@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jascha030\DB\Tests;
+namespace Jascha030\DB;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;

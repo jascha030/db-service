@@ -1,17 +1,18 @@
 # DB Service
 
 A thin layer on top of `doctrine/dbal`.
+This package was made for usage in the `jascha030/xerographer` package.
 
 ## Getting started
 
 ## Prerequisites
 
-* php: `^7.4|^8.0.0|^8.1`
+* php: `~8.0||~8.1||~8.2`
 * Composer `^2.3` (prefered)
 
 ### Installation
 
-```shell
+```sh
 composer require jascha030/db
 ```
 
@@ -22,8 +23,10 @@ defined to run the tests.
 
 The default configuration will be used when using the `test` command, which is defined at `.phpunit.xml`.
 
-```shell
+```sh
 composer test
+# Or
+composer run test
 ```
 
 A code coverage report is generated in the project's root as `cov.xml`. The `cov.xml` file is not ignored in the
@@ -33,7 +36,7 @@ A code coverage report is generated in the project's root as `cov.xml`. The `cov
 
 A code style configuration for `friendsofphp/php-cs-fixer` is included, defined in `.php-cs-fixer.php`.
 
-```shell
+```sh
 composer format
 ```
 

@@ -7,7 +7,6 @@
 !.var/cache/phpunit/.gitkeep
 .var/cache/php-cs-fixer/*
 !.var/cache/php-cs-fixer/.gitkeep
-
 temp/
 tmp/
 dist/

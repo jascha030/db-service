@@ -1,6 +1,7 @@
 # DB Service
 
 A thin layer on top of `doctrine/dbal`.
+This package was made for usage in the `jascha030/xerographer` package.
 
 ## Getting started
 

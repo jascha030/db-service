@@ -16,16 +16,6 @@
         "DB-management"
     ],
     "homepage": "https://github.com/jascha030",
-    "config": {
-        "platform-check": false,
-        "platform": {
-            "php": "8.0.2"
-        },
-        "sort-packages": true,
-        "allow-plugins": {
-            "bamarni/composer-bin-plugin": true
-        }
-    },
     "bin": [],
     "autoload": {
         "psr-4": {
@@ -41,29 +31,39 @@
     "prefer-stable": true,
     "require": {
         "php": "~8.0||~8.1||~8.2",
-        "doctrine/dbal": "^3.4"
+        "doctrine/dbal": "^3.6",
+        "symfony/console": "^6.0",
+        "symfony/process": "^6.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^v3.8.0",
-        "phpunit/phpunit": "^9.5",
         "roave/security-advisories": "dev-latest",
-        "symfony/var-dumper": "4.4|^5.4|^6.0",
-        "vlucas/phpdotenv": "^5.4",
-        "bamarni/composer-bin-plugin": "^1.8"
+        "symfony/var-dumper": "4.4|^5.4|^6.0.19",
+        "vlucas/phpdotenv": "^5.5",
+        "bamarni/composer-bin-plugin": "^1.8.2"
     },
-    "suggest": {
-        "php-di/php-di": "^6.0"
+    "config": {
+        "platform-check": false,
+        "platform": {
+            "php": "8.0.2"
+        },
+        "sort-packages": true,
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true
+        }
     },
-    "extra": {},
+    "extra": {
+        "bamarni-bin": {
+            "bin-links": false,
+            "forward-command": true
+        }
+    },
     "scripts": {
         "php-cs-fixer": "tools/php-cs-fixer",
-        "phpstan": "tools/phpstan",
-        "phpunit": "vendor/bin/phpunit",
-        "rector": "vendor/bin/rector",
-        "format": "@php-cs-fixer fix --config=.php-cs-fixer.php",
-        "test": "@phpunit -c phpunit.xml",
-        "analyze": "@phpstan analyze -c phpstan.neon",
-        "fix:dry": "@rector process src --dry-run",
-        "fix": "@rector process src"
+        "phpunit": "tools/phpunit.phar",
+        "phpstan": "vendor-bin/phpstan/vendor/bin/phpstan",
+        "format": "@php-cs-fixer fix -c .php-cs-fixer.dist.php",
+        "test": "@phpunit -c phpunit.xml.dist",
+        "analyze": "@phpstan analyze -c phpstan.neon.dist",
+        "analyze:baseline": "@analyze --generate-baseline",
     }
 }

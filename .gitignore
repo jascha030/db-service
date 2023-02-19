@@ -13,6 +13,7 @@ dist/
 build/
 .cache/
 **.cache
+/test-output/
 
 # Library
 vendor/

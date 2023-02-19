@@ -2,6 +2,7 @@
 /.phive                 export-ignore
 /.var                   export-ignore
 /tests                  export-ignore
+/test-output            export-ignore
 /tools                  export-ignore
 /tools/*                binary
 /vendor-bin             export-ignore

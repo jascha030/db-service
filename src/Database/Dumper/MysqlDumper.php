@@ -11,13 +11,11 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
-use function array_merge;
 use function count;
 use function file_exists;
 use function getcwd;
 use function implode;
 use function is_dir;
-use function passthru;
 use function sleep;
 use function sprintf;
 use function str_ends_with;
@@ -28,12 +26,12 @@ use function str_ends_with;
  * @implements DumperInterface
  *
  * @see  DumperInterface
- * @link 'https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html
+ * @see 'https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html
  */
 final class MysqlDumper extends DumperAbstract
 {
     /**
-     * @throws SystemDependencyException In case the mysqldump binary could not be located.
+     * @throws SystemDependencyException in case the mysqldump binary could not be located
      * @throws InvalidArgumentException
      */
     public function dump(array $options, ?string $path = null, ?OutputInterface $output = null): int
@@ -49,7 +47,7 @@ final class MysqlDumper extends DumperAbstract
 
         $values = $required['values'];
 
-        if ($path === null) {
+        if (null === $path) {
             $path = sprintf('./%s.sql', $values['dbname']);
         }
 
@@ -78,7 +76,7 @@ final class MysqlDumper extends DumperAbstract
 
         $status = $command->run(
             static function (string $type, string $line) use ($output) {
-                $style = $type === Process::ERR
+                $style = Process::ERR === $type
                     ? 'error'
                     : 'info';
 
@@ -92,11 +90,11 @@ final class MysqlDumper extends DumperAbstract
             ]
         );
 
-        if ($status !== Command::SUCCESS) {
+        if (Command::SUCCESS !== $status) {
             return $status;
         }
 
-        while(! file_exists($path)) {
+        while (! file_exists($path)) {
             sleep(1);
         }
 
@@ -111,7 +109,7 @@ final class MysqlDumper extends DumperAbstract
         $finder = new ExecutableFinder();
         $binary = $finder->find('mysqldump');
 
-        if ($binary === null) {
+        if (null === $binary) {
             throw new SystemDependencyException(
                 'mysqldump',
                 'https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html'

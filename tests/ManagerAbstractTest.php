@@ -1,4 +1,5 @@
-<?php /** @noinspection PhpMissingParentCallCommonInspection */
+<?php
+/** @noinspection PhpMissingParentCallCommonInspection */
 
 declare(strict_types=1);
 

@@ -17,16 +17,16 @@ abstract class DumperAbstract implements DumperInterface
     /**
      * Get the options that are required in the $options argument of the dump method.
      *
-     * @return array<string> Required keys to retrieve from user provided $options.
+     * @return array<string> required keys to retrieve from user provided $options
      *
      * @see static::dump()
      */
     abstract protected function getRequiredOptions(): array;
 
     /**
-     * @param array<string> $options user input.
+     * @param array<string> $options user input
      *
-     * @return array<string,string|string[]> Values and errors in case required keys are not provided.
+     * @return array<string,string|string[]> values and errors in case required keys are not provided
      */
     protected function resolveParameters(array $options): array
     {
@@ -40,6 +40,6 @@ abstract class DumperAbstract implements DumperInterface
             $values[$key] = $options[$key];
         }
 
-        return ['values' => array_filter($values), 'errors' => $errors,];
+        return ['values' => array_filter($values), 'errors' => $errors];
     }
 }

@@ -11,7 +11,7 @@ class SystemDependencyException extends Exception
 {
     public function __construct(string $dependency, ?string $url = null, int $code = 0, ?Throwable $previous = null)
     {
-        $instructions = $url !== null
+        $instructions = null !== $url
             ? sprintf('%sGo to %s for instructions on how to install %s', PHP_EOL, $url, $dependency)
             : '';
 

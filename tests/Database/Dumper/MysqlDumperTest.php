@@ -16,6 +16,8 @@ use function PHPUnit\Framework\assertFileExists;
 /**
  * @covers \Jascha030\DB\Database\Dumper\DumperAbstract
  * @covers \Jascha030\DB\Database\Dumper\MysqlDumper
+ *
+ * @internal
  */
 class MysqlDumperTest extends TestCase
 {

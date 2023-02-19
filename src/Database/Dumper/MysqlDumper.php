@@ -7,14 +7,18 @@ namespace Jascha030\DB\Database\Dumper;
 use Doctrine\DBAL\Exception\InvalidArgumentException;
 use Jascha030\DB\Database\DumperInterface;
 use Jascha030\DB\Exception\SystemDependencyException;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
 use function array_merge;
 use function count;
+use function file_exists;
 use function getcwd;
 use function implode;
 use function is_dir;
+use function passthru;
+use function sleep;
 use function sprintf;
 use function str_ends_with;
 
@@ -26,7 +30,7 @@ use function str_ends_with;
  * @see  DumperInterface
  * @link 'https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html
  */
-final class MysqlDumper implements DumperInterface
+final class MysqlDumper extends DumperAbstract
 {
     /**
      * @throws SystemDependencyException In case the mysqldump binary could not be located.
@@ -34,8 +38,7 @@ final class MysqlDumper implements DumperInterface
      */
     public function dump(array $options, ?string $path = null, ?OutputInterface $output = null): int
     {
-        $required = $this->resolveParameters($options, ['dbname' => 'database', 'user' => 'dbuser'], true);
-        $optional = $this->resolveParameters($options, ['password' => 'pass']);
+        $required = $this->resolveParameters($options);
 
         if (count($required['errors']) > 0) {
             throw new InvalidArgumentException(sprintf(
@@ -44,7 +47,7 @@ final class MysqlDumper implements DumperInterface
             ));
         }
 
-        $values = array_merge($required['values'], $optional);
+        $values = $required['values'];
 
         if ($path === null) {
             $path = sprintf('./%s.sql', $values['dbname']);
@@ -62,19 +65,42 @@ final class MysqlDumper implements DumperInterface
             $path = sprintf('%s/%s.sql', $path, $values['dbname']);
         }
 
-        $process = (new Process(
+        $command = Process::fromShellCommandline(implode(' ', [
+            $this->getBinary(),
+            '--add-drop-table',
+            '--skip-comments',
+            '--default-character-set=utf8mb4',
+            '--user="${:USER}"',
+            '--password="${:PASSWORD}"',
+            '"${:DATABASE}"',
+            '--result-file="${:OUTPUT_FILE}"',
+        ]));
+
+        $status = $command->run(
+            static function (string $type, string $line) use ($output) {
+                $style = $type === Process::ERR
+                    ? 'error'
+                    : 'info';
+
+                $output?->writeln(sprintf('<%1$s>%2$s</%1$s>', $style, $line));
+            },
             [
-                $this->getBinary(),
-                sprintf('-u %s', $values['user']),
-                sprintf('-p%s ', isset($values['password']) ? ' ' . $values['password'] : ''),
-                $values['dbname'],
-                sprintf('< %s', $path),
+                'USER'        => $values['user'],
+                'PASSWORD'    => $values['password'],
+                'DATABASE'    => $values['dbname'],
+                'OUTPUT_FILE' => $path,
             ]
-        ))->mustRun();
+        );
 
-        $output?->writeln($process->getOutput());
+        if ($status !== Command::SUCCESS) {
+            return $status;
+        }
 
-        return $process->getExitCode();
+        while(! file_exists($path)) {
+            sleep(1);
+        }
+
+        return $status;
     }
 
     /**
@@ -96,32 +122,12 @@ final class MysqlDumper implements DumperInterface
     }
 
     /**
-     * @param array<string|string> $options user input.
-     * @param array<string,string> $keys keys and possible aliases to retrieve in $options.
+     * {@inheritDoc}
      *
-     * @return array<string,string|string[]> Values and errors in case required keys are not provided.
+     * @return string[]
      */
-    private function resolveParameters(array $options, array $keys, bool $required = false): array
+    protected function getRequiredOptions(): array
     {
-        $values = [];
-        $errors = [];
-
-        foreach ($keys as $key => $alt) {
-            $value = $options[$key] ?? $options[$alt] ?? null;
-
-            if (null !== $value) {
-                $values[$key] = $value;
-
-                continue;
-            }
-
-            if ($required) {
-                $errors = $key;
-            }
-        }
-
-        return $required
-            ? compact('values', 'errors')
-            : $values;
+        return ['dbname', 'user', 'password'];
     }
 }

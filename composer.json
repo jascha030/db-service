@@ -64,6 +64,6 @@
         "format": "@php-cs-fixer fix -c .php-cs-fixer.dist.php",
         "test": "@phpunit -c phpunit.xml.dist",
         "analyze": "@phpstan analyze -c phpstan.neon.dist",
-        "analyze:baseline": "@analyze --generate-baseline",
+        "analyze:baseline": "@analyze --generate-baseline"
     }
 }

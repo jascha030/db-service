@@ -21,7 +21,7 @@ composer require jascha030/db
 Included with the package are a set of Unit tests using `phpunit/phpunit`. For ease of use a composer script command is
 defined to run the tests.
 
-The default configuration will be used when using the `test` command, which is defined at `.phpunit.xml`.
+The default configuration will be used when using the `test` command, which is defined at `phpunit.xml.dist`.
 
 ```sh
 composer test
@@ -34,7 +34,7 @@ A code coverage report is generated in the project's root as `cov.xml`. The `cov
 
 ### Code style & Formatting
 
-A code style configuration for `friendsofphp/php-cs-fixer` is included, defined in `.php-cs-fixer.php`.
+A code style configuration for `friendsofphp/php-cs-fixer` is included, defined in `.php-cs-fixer.dist.php`.
 
 ```sh
 composer format

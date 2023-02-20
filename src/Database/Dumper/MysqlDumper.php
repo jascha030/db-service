@@ -1,4 +1,5 @@
-<?php /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+<?php
+/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 declare(strict_types=1);
 
@@ -25,7 +26,7 @@ use function str_ends_with;
  *
  * @see  DumperAbstract
  * @see  DumperInterface
- * @link  https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html
+ * @see  https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html
  */
 final class MysqlDumper extends DumperAbstract
 {

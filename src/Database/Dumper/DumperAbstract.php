@@ -24,9 +24,9 @@ abstract class DumperAbstract implements DumperInterface
     abstract protected function getRequiredOptions(): array;
 
     /**
-     * @param array<string> $options user input
+     * @param array<string|int,string|string[]> $options user input
      *
-     * @return array<string,string|string[]> values and errors in case required keys are not provided
+     * @return array{values: array<string, non-empty-array<string>|non-falsy-string>, errors: array<int, string>} values and errors in case required keys are not provided
      */
     protected function resolveParameters(array $options): array
     {

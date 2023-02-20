@@ -1,5 +1,4 @@
-<?php
-/** @noinspection PhpMissingParentCallCommonInspection */
+<?php /** @noinspection PhpMissingParentCallCommonInspection */
 
 declare(strict_types=1);
 
@@ -7,6 +6,8 @@ namespace Jascha030\DB;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Exception;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use function PHPUnit\Framework\assertArrayNotHasKey;
 use function PHPUnit\Framework\assertInstanceOf;
@@ -19,12 +20,12 @@ use function PHPUnit\Framework\assertArrayHasKey;
  */
 final class ManagerAbstractTest extends TestCase
 {
-    private static ?Connection $connection = null;
+    private static Connection $connection;
 
-    private static ?string $databaseName = null;
+    private static string $databaseName;
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public static function setUpBeforeClass(): void
     {
@@ -38,20 +39,19 @@ final class ManagerAbstractTest extends TestCase
         self::$databaseName = uniqid('unittest', false);
     }
 
-    public static function tearDownAfterClass(): void
+    private function getConnection(): Connection
     {
-        self::$connection   = null;
-        self::$databaseName = null;
+        return self::$connection;
     }
 
     /**
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function testCreateDatabase(): void
     {
-        self::$connection->connect();
+        $this->getConnection()->connect();
 
-        $schemaManager = self::$connection->createSchemaManager();
+        $schemaManager = $this->getConnection()->createSchemaManager();
 
         // First assert our database is not present beforehand.
         assertArrayNotHasKey(self::$databaseName, array_flip($schemaManager->listDatabases()));
@@ -65,21 +65,21 @@ final class ManagerAbstractTest extends TestCase
     /**
      * @depends testCreateDatabase
      *
-     * @throws \Doctrine\DBAL\Exception
+     * @throws Exception
      */
     public function testDropDatabase(): void
     {
-        self::$connection->connect();
+        $this->getConnection()->connect();
 
-        $schemaManager = self::$connection->createSchemaManager();
+        $schemaManager = $this->getConnection()->createSchemaManager();
 
         // First assert our database IS present beforehand.
-        $this->assertArrayHasKey(self::$databaseName, array_flip($schemaManager->listDatabases()));
+        self::assertArrayHasKey(self::$databaseName, array_flip($schemaManager->listDatabases()));
 
         $this->getManager()->dropDatabase(self::$databaseName);
 
         // Assert our database is absent after deletion.
-        $this->assertArrayNotHasKey(self::$databaseName, array_flip($schemaManager->listDatabases()));
+        self::assertArrayNotHasKey(self::$databaseName, array_flip($schemaManager->listDatabases()));
     }
 
     public function testGetConnection(): void
@@ -87,6 +87,9 @@ final class ManagerAbstractTest extends TestCase
         assertInstanceOf(Connection::class, $this->getManager()->getConnection());
     }
 
+    /**
+     * @return ManagerAbstract|(ManagerAbstract&MockObject)|MockObject
+     */
     private function getManager()
     {
         $mock = $this->getMockForAbstractClass(ManagerAbstract::class);

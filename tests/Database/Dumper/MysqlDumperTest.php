@@ -9,9 +9,11 @@ use Jascha030\DB\Exception\SystemDependencyException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use function defined;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertFileDoesNotExist;
 use function PHPUnit\Framework\assertFileExists;
+use const TEST_OUTPUT_DIR;
 
 /**
  * @covers \Jascha030\DB\Database\Dumper\DumperAbstract
@@ -27,6 +29,10 @@ class MysqlDumperTest extends TestCase
      */
     public function testDump(): void
     {
+        if (! defined('TEST_OUTPUT_DIR')) {
+            static::fail('Output dir was not created.');
+        }
+
         if (! isset($_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $_ENV['DUMPER_TEST_DATABASE'])) {
             static::fail('Could not find required credentials in environment.');
         }
@@ -40,9 +46,9 @@ class MysqlDumperTest extends TestCase
             Command::SUCCESS,
             $dumper->dump(
                 [
-                    'user'     => $_ENV['DB_USER'],
-                    'password' => $_ENV['DB_PASSWORD'],
-                    'dbname'   => $_ENV['DUMPER_TEST_DATABASE'],
+                    'user'     => (string)$_ENV['DB_USER'],
+                    'password' => (string)$_ENV['DB_PASSWORD'],
+                    'dbname'   => (string)$_ENV['DUMPER_TEST_DATABASE'],
                 ],
                 TEST_OUTPUT_DIR,
                 new ConsoleOutput()

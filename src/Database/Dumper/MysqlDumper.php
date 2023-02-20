@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
 
 declare(strict_types=1);
 
@@ -23,14 +23,15 @@ use function str_ends_with;
 /**
  * Dumper implementation for MySQL using mysqldump.
  *
- * @implements DumperInterface
- *
+ * @see  DumperAbstract
  * @see  DumperInterface
- * @see 'https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html
+ * @link  https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html
  */
 final class MysqlDumper extends DumperAbstract
 {
     /**
+     * {@inheritDoc}
+     *
      * @throws SystemDependencyException in case the mysqldump binary could not be located
      * @throws InvalidArgumentException
      */
@@ -45,6 +46,9 @@ final class MysqlDumper extends DumperAbstract
             ));
         }
 
+        /**
+         * @var string[] $values
+         */
         $values = $required['values'];
 
         if (null === $path) {

@@ -28,7 +28,7 @@ jobs:
           tools: none
 
       - name: Run PHP-CS-Fixer
-        run: ./tools/php-cs-fixer fix --dry-run --show-progress=dots --using-cache=no --verbose
+        run: ./tools/php-cs-fixer fix --dry-run --show-progress=dots --using-cache=no --verbose --config=.php-cs-fixer.dist.php
 
   validate:
       name: Validate
@@ -50,7 +50,7 @@ jobs:
         run: ./tools/composer update --no-interaction --no-ansi --no-progress
 
       - name: Analyze with PHPStan
-        run: ./vendor-bin/phpstan/vendor/bin/phpstan analyze -c phpstan.neon
+        run: ./vendor-bin/phpstan/vendor/bin/phpstan analyze -c phpstan.neon.dist
 
   unit-tests:
     name: Unit Tests

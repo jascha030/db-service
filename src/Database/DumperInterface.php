@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 interface DumperInterface
 {
     /**
-     * @param array<string|int,string|string[]> $options $options user input
+     * @param array<int|string,string|string[]> $options $options user input
      * @param null|string                       $path    user provided path, if null `getcwd()` will be used
      * @param null|OutputInterface              $output  optionally provide instance of `OutputInterface` to
      *                                                   passthrough output of an internally executed command or for

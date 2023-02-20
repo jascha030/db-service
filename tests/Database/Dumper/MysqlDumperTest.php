@@ -46,9 +46,9 @@ class MysqlDumperTest extends TestCase
             Command::SUCCESS,
             $dumper->dump(
                 [
-                    'user'     => (string)$_ENV['DB_USER'],
-                    'password' => (string)$_ENV['DB_PASSWORD'],
-                    'dbname'   => (string)$_ENV['DUMPER_TEST_DATABASE'],
+                    'user'     => (string) $_ENV['DB_USER'],
+                    'password' => (string) $_ENV['DB_PASSWORD'],
+                    'dbname'   => (string) $_ENV['DUMPER_TEST_DATABASE'],
                 ],
                 TEST_OUTPUT_DIR,
                 new ConsoleOutput()

@@ -9,6 +9,7 @@ parameters:
     - tests
   bootstrapFiles:
     - tools/phpunit.phar
+    - tests/bootstrap.php
   excludePaths:
       analyseAndScan:
         - tests/*/Fixtures/*

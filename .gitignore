@@ -31,3 +31,5 @@ auth.json
 *.sql
 TODO.md
 
+.var/cache/cache
+.var/cache/resultCache.php

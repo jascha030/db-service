@@ -2,11 +2,7 @@
 
 declare(strict_types=1);
 
-use Dotenv\Dotenv;
-
 require dirname(__DIR__) . '/vendor/autoload.php';
-
-Dotenv::createImmutable(__DIR__)->load();
 
 if (is_dir($testDir = dirname(__DIR__) . '/test-output')) {
     $iterator = new FilesystemIterator($testDir);

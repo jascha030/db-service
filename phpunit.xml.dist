@@ -3,7 +3,8 @@
     xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
     bootstrap="tests/bootstrap.php" executionOrder="depends,defects"
     beStrictAboutOutputDuringTests="true" failOnRisky="true" failOnWarning="true" colors="true"
-    testdox="true" cacheResult="true" cacheDirectory=".phpunit.cache" requireCoverageMetadata="true">
+    testdox="true" cacheResult="true" cacheDirectory=".var/cache/.phpunit.cache"
+    requireCoverageMetadata="true">
     <php>
         <env name="DB_USER" value="root" />
         <env name="DB_PASSWORD" value="root" />

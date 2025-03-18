@@ -22,13 +22,13 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.1
-          extensions: none, iconv, json, phar, tokenizer
-          coverage: none
-          tools: none
+          php-version: 8.2
+          tools: composer,phive
 
       - name: Run PHP-CS-Fixer
-        run: ./tools/php-cs-fixer fix --dry-run --show-progress=dots --using-cache=no --verbose --config=.php-cs-fixer.dist.php
+        run: |
+          composer install --no-interaction --no-ansi --no-progress
+          composer run format
 
   validate:
       name: Validate
@@ -42,12 +42,10 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.1
-          extensions: none, ctype, curl, date, dom, json, libxml, mbstring, phar, simplexml, soap, tokenizer, xml, xmlwriter, zlib
-          coverage: none
-          tools: none
+          tools: composer,phive
 
       - name: Install dependencies with Composer
-        run: ./tools/composer update --no-interaction --no-ansi --no-progress
+        run:  composer install --no-interaction --no-ansi --no-progress
 
       - name: Analyze with PHPStan
         run: ./vendor-bin/phpstan/vendor/bin/phpstan analyze -c phpstan.neon.dist

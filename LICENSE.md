@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2022 Jascha van Aalst
+Copyright (c) 2025 Jascha van Aalst
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

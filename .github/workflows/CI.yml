@@ -41,11 +41,11 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.1
+          php-version: 8.2
           tools: composer,phive
 
-      - name: Install dependencies with Composer
-        run:  composer install --no-interaction --no-ansi --no-progress
-
       - name: Analyze with PHPStan
-        run: ./vendor-bin/phpstan/vendor/bin/phpstan analyze -c phpstan.neon.dist
+        run: |
+          composer install --no-interaction --no-ansi --no-progress
+          composer run analyze
+

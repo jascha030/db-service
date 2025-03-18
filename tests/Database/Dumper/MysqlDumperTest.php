@@ -49,19 +49,38 @@ class MysqlDumperTest extends TestCase
             static::fail('Could not find required credentials in environment.');
         }
 
-        $connection = DriverManager::getConnection([
+        $connection = DriverManager::getConnection([ // @phpstan-ignore-line
             'user'     => $_ENV['DB_USER'],
             'password' => $_ENV['DB_PASSWORD'],
             'host'     => 'localhost',
             'driver'   => 'pdo_mysql',
         ]);
 
-        $db      = $_ENV['DUMPER_TEST_DATABASE'];
+        /**
+         * @var string $db
+         */
+        $db = $_ENV['DUMPER_TEST_DATABASE'];
+
+        /**
+         * @var string $db_user
+         */
+        $db_user = $_ENV['DB_USER'];
+
+        /**
+         * @var string $db_pass
+         */
+        $db_pass = $_ENV['DB_PASSWORD'];
+
+        /**
+         * @var string $db_name
+         */
+        $db_name = $_ENV['DUMPER_TEST_DATABASE'];
+
         $manager = $connection->createSchemaManager();
         $manager->createDatabase($db);
 
         $dumper   = new MysqlDumper();
-        $expected = TEST_OUTPUT_DIR . '/' . $_ENV['DUMPER_TEST_DATABASE'] . '.sql';
+        $expected = TEST_OUTPUT_DIR . '/' . $_ENV['DUMPER_TEST_DATABASE'] . '.sql'; // @phpstan-ignore-line
 
         assertFileDoesNotExist($expected);
 
@@ -69,9 +88,9 @@ class MysqlDumperTest extends TestCase
             Command::SUCCESS,
             $dumper->dump(
                 [
-                    'user'     => (string) $_ENV['DB_USER'],
-                    'password' => (string) $_ENV['DB_PASSWORD'],
-                    'dbname'   => (string) $_ENV['DUMPER_TEST_DATABASE'],
+                    'user'     => $db_user,
+                    'password' => $db_pass,
+                    'dbname'   => $db_name,
                 ],
                 TEST_OUTPUT_DIR,
                 new ConsoleOutput()
@@ -80,6 +99,6 @@ class MysqlDumperTest extends TestCase
 
         assertFileExists($expected);
 
-        $manager->dropDatabase($_ENV['DUMPER_TEST_DATABASE']);
+        $manager->dropDatabase($db_name);
     }
 }

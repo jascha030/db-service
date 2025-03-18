@@ -37,7 +37,7 @@ final class ManagerAbstractTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        self::$connection = DriverManager::getConnection([
+        self::$connection = DriverManager::getConnection([ // @phpstan-ignore-line
             'user'     => $_ENV['DB_USER'],
             'password' => $_ENV['DB_PASSWORD'],
             'host'     => 'localhost',
@@ -57,8 +57,6 @@ final class ManagerAbstractTest extends TestCase
      */
     public function testCreateDatabase(): void
     {
-        $this->getConnection();
-
         $schemaManager = $this->getConnection()->createSchemaManager();
 
         // First assert our database is not present beforehand.
@@ -77,8 +75,6 @@ final class ManagerAbstractTest extends TestCase
      */
     public function testDropDatabase(): void
     {
-        $this->getConnection();
-
         $schemaManager = $this->getConnection()->createSchemaManager();
 
         // First assert our database IS present beforehand.
@@ -92,7 +88,7 @@ final class ManagerAbstractTest extends TestCase
 
     public function testGetConnection(): void
     {
-        assertInstanceOf(Connection::class, $this->getManager()->getConnection());
+        assertInstanceOf(Connection::class, $this->getManager()->getConnection()); // @phpstan-ignore-line
     }
 
     /**

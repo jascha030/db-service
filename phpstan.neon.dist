@@ -16,3 +16,10 @@ parameters:
 
   tmpDir: .var/cache
   editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+
+  ignoreErrors:
+    -
+      message: '#^Trait Jascha030\\DB\\TestConnectionTrait is used zero times and is not analysed\.$#'
+      identifier: trait.unused
+      count: 1
+      path: tests/TestConnectionTrait.php

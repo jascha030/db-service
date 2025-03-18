@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * Copyright (c) 2025 Jascha van Aalst
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace Jascha030\DB;
@@ -17,8 +24,6 @@ use Jascha030\DB\Database\FactoryInterface;
 abstract class ManagerAbstract implements ConnectorInterface, FactoryInterface, DropperInterface
 {
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function dropDatabase(string $name): void
@@ -31,8 +36,6 @@ abstract class ManagerAbstract implements ConnectorInterface, FactoryInterface, 
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @throws \Doctrine\DBAL\Exception
      */
     public function createDatabase(string $name): void

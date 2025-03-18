@@ -1,5 +1,11 @@
 <?php
-/** @noinspection PhpMissingParentCallCommonInspection */
+
+/*
+ * Copyright (c) 2025 Jascha van Aalst
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 declare(strict_types=1);
 
@@ -10,9 +16,10 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+
+use function PHPUnit\Framework\assertArrayHasKey;
 use function PHPUnit\Framework\assertArrayNotHasKey;
 use function PHPUnit\Framework\assertInstanceOf;
-use function PHPUnit\Framework\assertArrayHasKey;
 
 /**
  * @covers \Jascha030\DB\ManagerAbstract

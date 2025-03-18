@@ -1,5 +1,11 @@
 <?php
-/** @noinspection PhpUnnecessaryFullyQualifiedNameInspection */
+
+/*
+ * Copyright (c) 2025 Jascha van Aalst
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 declare(strict_types=1);
 
@@ -12,6 +18,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
+
 use function count;
 use function file_exists;
 use function getcwd;
@@ -31,8 +38,6 @@ use function str_ends_with;
 final class MysqlDumper extends DumperAbstract
 {
     /**
-     * {@inheritDoc}
-     *
      * @throws SystemDependencyException in case the mysqldump binary could not be located
      * @throws InvalidArgumentException
      */
@@ -41,10 +46,7 @@ final class MysqlDumper extends DumperAbstract
         $required = $this->resolveParameters($options);
 
         if (count($required['errors']) > 0) {
-            throw new InvalidArgumentException(sprintf(
-                'Invalid argument "\$options", missing required key(s): %s',
-                implode(', ', $required['errors'])
-            ));
+            throw new InvalidArgumentException(sprintf('Invalid argument "\$options", missing required key(s): %s', implode(', ', $required['errors'])));
         }
 
         /**
@@ -80,7 +82,7 @@ final class MysqlDumper extends DumperAbstract
         ]));
 
         $status = $command->run(
-            static function (string $type, string $line) use ($output) {
+            static function (string $type, string $line) use ($output): void {
                 $style = Process::ERR === $type
                     ? 'error'
                     : 'info';
@@ -115,18 +117,13 @@ final class MysqlDumper extends DumperAbstract
         $binary = $finder->find('mysqldump');
 
         if (null === $binary) {
-            throw new SystemDependencyException(
-                'mysqldump',
-                'https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html'
-            );
+            throw new SystemDependencyException('mysqldump', 'https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html');
         }
 
         return $binary;
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @return string[]
      */
     protected function getRequiredOptions(): array

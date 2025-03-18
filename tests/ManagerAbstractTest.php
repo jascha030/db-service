@@ -50,7 +50,7 @@ final class ManagerAbstractTest extends TestCase
      */
     public function testCreateDatabase(): void
     {
-        $this->getConnection()->connect();
+        $this->getConnection();
 
         $schemaManager = $this->getConnection()->createSchemaManager();
 
@@ -70,7 +70,7 @@ final class ManagerAbstractTest extends TestCase
      */
     public function testDropDatabase(): void
     {
-        $this->getConnection()->connect();
+        $this->getConnection();
 
         $schemaManager = $this->getConnection()->createSchemaManager();
 

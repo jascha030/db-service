@@ -7,8 +7,8 @@ This package was made for usage in the `jascha030/xerographer` package.
 
 ## Prerequisites
 
-* php: `~8.0||~8.1||~8.2`
-* Composer `^2.3` (prefered)
+* php: `>=8.2`
+* Composer `^2.3`
 
 ### Installation
 

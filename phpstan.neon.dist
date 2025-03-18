@@ -1,6 +1,6 @@
 includes:
-    - vendor-bin/phpstan/vendor/phpstan/phpstan-phpunit/extension.neon
-    - vendor-bin/phpstan/vendor/phpstan/phpstan-phpunit/rules.neon
+  - vendor-bin/phpstan/vendor/phpstan/phpstan-phpunit/extension.neon
+  - vendor-bin/phpstan/vendor/phpstan/phpstan-phpunit/rules.neon
 
 parameters:
   level: max
@@ -11,9 +11,8 @@ parameters:
     - tools/phpunit.phar
     - tests/bootstrap.php
   excludePaths:
-      analyseAndScan:
-        - tests/*/Fixtures/*
+    analyseAndScan:
+      - tests/*/Fixtures/*
 
   tmpDir: .var/cache
   editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
-

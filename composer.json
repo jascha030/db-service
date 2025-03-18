@@ -63,9 +63,17 @@
         }
     },
     "scripts": {
-        "analyze": "@phpstan analyze -c phpstan.neon.dist",
-        "analyze:baseline": "@analyze --generate-baseline",
-        "format": "@php-cs-fixer fix --config=.php-cs-fixer.dist.php",
+        "analyze": [
+            "@tools:install",
+            "@phpstan analyze -c phpstan.neon.dist"
+        ],
+        "analyze:baseline": [
+            "@tools:install",
+            "@phpstan analyze -c phpstan.neon.dist --generate-baseline"
+        ],
+        "format": [
+            "@php-cs-fixer fix --config=.php-cs-fixer.dist.php"
+        ],
         "php-cs-fixer": "vendor/bin/php-cs-fixer",
         "phpstan": "vendor/bin/phpstan",
         "phpunit": "tools/phpunit.phar",
